@@ -36,6 +36,6 @@ jobs:
                 ${{ runner.os }}-composer-
 
       - name: Install Dependencies
-        if: steps.composer-cache.outputs.dir != 'true'
+        if: steps.composer-cache.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
