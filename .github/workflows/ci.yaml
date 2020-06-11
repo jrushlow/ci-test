@@ -23,19 +23,19 @@ jobs:
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
+            echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - uses: actions/cache@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+            path: ${{ steps.composer-cache.outputs.dir }}
+            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: |
+                ${{ runner.os }}-composer-
 
       - name: Checkout
         uses: actions/checkout@v2.0.0
 
       - name: Install Dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
+        if: steps.composer-cache.outputs.dir != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
